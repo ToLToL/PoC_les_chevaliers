@@ -1,5 +1,20 @@
 # PoC - Les chevaliers de la table Bouygues
 
+## Description
+
+L'équipe des chevaliers de la table Bouygues est une des finalistes du challenge *EDHEC DA-IA*.
+Le challenge a été organisé par Bouygues Telecom en partenariat avec IBM en 2020.
+
+Le but était de proposer et développer une stratégie digitale pour booster la vente des forfaits mobiles sur le site de Bouygues Telecom.
+Ce PoC consiste en un chatbot qui recommande un forfait mobile en se basant sur un modèle IA de clustering.
+Le clustering se fait actuellement sur un open dataset sur la consommation des utilisateurs.
+
+Les services utilisés sont:
+
+  - IBM Watson Assistant
+  - IBM Function
+  - IBM Watson Machine Learning
+
 
 ## Démo
 
