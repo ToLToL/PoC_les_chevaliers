@@ -1,1 +1,48 @@
-# PoC_les_chevaliers
+# PoC - Les chevaliers de la table Bouygues
+
+
+## Démo
+
+### Upload du dataset (00:00')
+
+* Aller sur [IBM Cloud Pak for Data](https://eu-de.dataplatform.cloud.ibm.com)
+
+### Création d'un modeler (00:19')
+
+### Création d'un modèle IA à partir du modeler (00:48')
+* Il faut avoir un output (node vert)
+
+### Déploiment du modèle IA (01:03')
+* Le modèle est déployé sous forme d'endpoint
+* On peut tester l'endpoint directment sur IBM Cloud via l'onglet "Test" (01:42')
+
+### Création d'un skill sur Watson Assistant (02:07')
+* Retourner sur [IBM Cloud Pak for Data](https://eu-de.dataplatform.cloud.ibm.com)
+
+### Création d'une IBM Function (03:02')
+* Retourner sur [IBM Cloud](https://cloud.ibm.com/)
+
+
+### Création d'un token IAM (03:53')
+* On a besoin d'un token IAM pour appeler l'endpoint du modèle IA.
+
+### Génération de l'apikey via curl (04:29')
+* Remplacez `VOTRE_TOKEN_IAM` par le votre
+
+```
+curl -k -X POST \
+--header "Content-Type: application/x-www-form-urlencoded" \
+--header "Accept: application/json" \
+--data-urlencode "grant_type=urn:ibm:params:oauth:grant-type:apikey" \
+--data-urlencode "apikey=VOTRE_TOKEN_IAM" \
+"https://iam.bluemix.net/identity/token"
+```
+> La durée de vie du token est d'1 heure. Pensez à regénerer l'apikey.
+
+### Connecter l'IBM Function au webhook de Watson Assitant (05:50')
+* N'oubliez pas d'ajouter `.json` à la fin de l'url pour avoir la réponse en JSON.
+
+### Tester notre skill en mode dev (06:46')
+
+### Création d'un "preview link" (07:09')
+* Votre chatbot est déployé / hébergé par IBM. C'est la solution idéale pour faire tester votre chatbot aux autres utilisateurs.
