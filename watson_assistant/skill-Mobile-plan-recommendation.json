@@ -1,0 +1,716 @@
+{
+  "intents": [
+    {
+      "intent": "calls_outgoing_to_abroad_spendings",
+      "examples": [
+        {
+          "text": "J'utilise 100€ par mois pour des appels vers l’étranger."
+        },
+        {
+          "text": "J'utilise 25€ par mois pour des appels vers l’étranger."
+        },
+        {
+          "text": "J'utilise 50€ par mois pour des appels vers l’étranger."
+        },
+        {
+          "text": "J'utilise moins de 10€ par mois pour des appels vers ."
+        }
+      ],
+      "description": "Dépenses dans les appels vers l’étranger"
+    },
+    {
+      "intent": "mo_data_usage",
+      "examples": [
+        {
+          "text": "J'utilise 10 000 Mo de données mobiles par mois."
+        },
+        {
+          "text": "J'utilise 1 000 Mo de données mobiles par mois."
+        },
+        {
+          "text": "J'utilise 100 Mo de données mobiles par mois."
+        },
+        {
+          "text": "J'utilise 500 Mo de données mobiles par mois."
+        }
+      ],
+      "description": "Nombre de Mo de données mobiles consommées par mois."
+    },
+    {
+      "intent": "user_has_outgoing_calls",
+      "examples": [
+        {
+          "text": "Non, je ne fais pas d'appels téléphoniques.",
+          "mentions": [
+            {
+              "entity": "boolean",
+              "location": [
+                0,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Oui, je fais des appels téléphoniques.",
+          "mentions": [
+            {
+              "entity": "boolean",
+              "location": [
+                0,
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "description": "Émission d’appels depuis le téléphone de l’utilisateur (boolean: 0 or 1)"
+    },
+    {
+      "intent": "user_has_outgoing_sms",
+      "examples": [
+        {
+          "text": "Non, je n'envoie pas de SMS.",
+          "mentions": [
+            {
+              "entity": "boolean",
+              "location": [
+                0,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Oui, j'envoie des SMS.",
+          "mentions": [
+            {
+              "entity": "boolean",
+              "location": [
+                0,
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "description": "Envoi de sms (boolean: 0 ou 1)"
+    },
+    {
+      "intent": "user_spendings",
+      "examples": [
+        {
+          "text": "J'utilise 10€ par mois avec mon téléphone."
+        },
+        {
+          "text": "J'utilise 20€ par mois avec mon téléphone."
+        },
+        {
+          "text": "J'utilise 40€ par mois avec mon téléphone."
+        },
+        {
+          "text": "J'utilise moins de 5€ par mois avec mon téléphone."
+        }
+      ],
+      "description": "Dépense par mois du prospect"
+    },
+    {
+      "intent": "user_use_data",
+      "examples": [
+        {
+          "text": "Non, je n'utilise pas de données mobiles.",
+          "mentions": [
+            {
+              "entity": "boolean",
+              "location": [
+                0,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Oui, j'utilise des données mobiles.",
+          "mentions": [
+            {
+              "entity": "boolean",
+              "location": [
+                0,
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "description": "Consommation de données mobiles (boolean: 0 ou 1)"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "boolean",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Non",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Oui",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-currency",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-number",
+      "values": []
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "webhooks": [
+    {
+      "url": "https://eu-gb.functions.appdomain.cloud/api/v1/web/b4443092-39d8-4cc7-a8f4-e47c263222ff/default/Les_chevaliers_clustering_model_python.json",
+      "name": "main_webhook",
+      "headers": []
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Bienvenue",
+      "output": {
+        "generic": [
+          {
+            "source": "https://image.freepik.com/vecteurs-libre/icone-robot-conception-signe-bot-notion-symbole-chatbot-service-assistance-vocale-bot-support-ligne-bot-stock-illustration-vectorielle_100456-34.jpg",
+            "response_type": "image"
+          },
+          {
+            "values": [
+              {
+                "text": "Bonjour je suis Cléo, votre assistant. Je vais vous guider pour vous proposer le forfait mobile qui vous convient."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "title": "Quel est le prix de votre forfait actuel ( ou de votre dernier forfait ) ? ",
+            "options": [
+              {
+                "label": "moins de 5 €",
+                "value": {
+                  "input": {
+                    "text": "J'utilise moins de 5€ par mois avec mon téléphone."
+                  }
+                }
+              },
+              {
+                "label": "environ 10 €",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 10€ par mois avec mon téléphone."
+                  }
+                }
+              },
+              {
+                "label": "environ 20 €",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 20€ par mois avec mon téléphone."
+                  }
+                }
+              },
+              {
+                "label": "environ 40 €",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 40€ par mois avec mon téléphone."
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Bienvenue"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1596729432720",
+      "event_name": "focus",
+      "dialog_node": "handler_10_1596729432731",
+      "previous_sibling": "handler_4_1596729432731"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1596730040135",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1596730040150",
+      "previous_sibling": "handler_9_1596730040150"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1596729023786",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1596729023796",
+      "previous_sibling": "handler_8_1596729023796"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1596729432720",
+      "context": {
+        "user_has_outgoing_calls": "@boolean"
+      },
+      "conditions": "@boolean",
+      "event_name": "input",
+      "dialog_node": "handler_4_1596729432731"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_5_1596729162374",
+      "context": {
+        "mo_data_usage": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_5_1596729162389"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1596729184949",
+      "context": {
+        "calls_outgoing_to_abroad_spendings": "@sys-currency"
+      },
+      "conditions": "@sys-currency",
+      "event_name": "input",
+      "dialog_node": "handler_5_1596729184958"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1596729686271",
+      "event_name": "focus",
+      "dialog_node": "handler_5_1596729686285",
+      "previous_sibling": "handler_6_1596729686285"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_5_1596729162374",
+      "event_name": "focus",
+      "dialog_node": "handler_6_1596729162389",
+      "previous_sibling": "handler_5_1596729162389"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1596729686271",
+      "context": {
+        "user_has_outgoing_sms": "@boolean"
+      },
+      "conditions": "@boolean",
+      "event_name": "input",
+      "dialog_node": "handler_6_1596729686285"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1596729184949",
+      "event_name": "focus",
+      "dialog_node": "handler_7_1596729184958",
+      "previous_sibling": "handler_5_1596729184958"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1596729023786",
+      "context": {
+        "user_spendings": "@sys-currency"
+      },
+      "conditions": "@sys-currency",
+      "event_name": "input",
+      "dialog_node": "handler_8_1596729023796"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1596730040135",
+      "context": {
+        "user_use_data": "@boolean"
+      },
+      "conditions": "@boolean",
+      "event_name": "input",
+      "dialog_node": "handler_9_1596730040150"
+    },
+    {
+      "type": "frame",
+      "title": "Mo data usage",
+      "output": {
+        "generic": [
+          {
+            "title": "Combien avez-vous dépensé pour des appels vers l’étranger ?",
+            "options": [
+              {
+                "label": "moins de 10 €",
+                "value": {
+                  "input": {
+                    "text": "J'utilise moins de  10€ par mois pour des appels vers l’étranger."
+                  }
+                }
+              },
+              {
+                "label": "environ 25 €",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 25€ par mois pour des appels vers l’étranger."
+                  }
+                }
+              },
+              {
+                "label": "environ 50 €",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 50€ par mois pour des appels vers l’étranger."
+                  }
+                }
+              },
+              {
+                "label": "environ 100 €",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 100€ par mois pour des appels vers l’étranger."
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#mo_data_usage",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_10_1596727218229",
+      "previous_sibling": "node_9_1596725490593"
+    },
+    {
+      "type": "frame",
+      "title": "User has outgoing calls",
+      "output": {
+        "generic": [
+          {
+            "title": "Envoyez-vous des SMS ?",
+            "options": [
+              {
+                "label": "Oui",
+                "value": {
+                  "input": {
+                    "text": "Oui, j'envoie des SMS."
+                  }
+                }
+              },
+              {
+                "label": "Non",
+                "value": {
+                  "input": {
+                    "text": "Non, je n'envoie pas de SMS."
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#user_has_outgoing_calls",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_2_1596729237729",
+      "previous_sibling": "node_3_1596727901617"
+    },
+    {
+      "type": "frame",
+      "title": "Calls outgoing to abroad spendings",
+      "output": {
+        "generic": [
+          {
+            "title": "Passez-vous des appels téléphoniques?",
+            "options": [
+              {
+                "label": "Oui",
+                "value": {
+                  "input": {
+                    "text": "Oui, je fais des appels téléphoniques."
+                  }
+                }
+              },
+              {
+                "label": "Non",
+                "value": {
+                  "input": {
+                    "text": "Non, je ne fais pas d'appels téléphoniques."
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#calls_outgoing_to_abroad_spendings",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_3_1596727901617",
+      "previous_sibling": "node_10_1596727218229"
+    },
+    {
+      "type": "frame",
+      "title": "User has outgoing sms",
+      "output": {
+        "generic": [
+          {
+            "title": "Avez-vous besoin d'utiliser Internet sur votre téléphone ?",
+            "options": [
+              {
+                "label": "Oui",
+                "value": {
+                  "input": {
+                    "text": "Oui, j'utilise des données mobiles."
+                  }
+                }
+              },
+              {
+                "label": "Non",
+                "value": {
+                  "input": {
+                    "text": "Non, je n'utilise pas de données mobiles."
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#user_has_outgoing_sms",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_4_1596729591846",
+      "previous_sibling": "node_2_1596729237729"
+    },
+    {
+      "type": "frame",
+      "title": "User use data",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "gprs_usage": "$mo_data_usage",
+            "user_use_gprs": "$user_use_data",
+            "user_spendings": "$user_spendings",
+            "user_has_outgoing_sms": "$user_has_outgoing_sms",
+            "user_has_outgoing_calls": "$user_has_outgoing_calls",
+            "calls_outgoing_to_abroad_spendings": "$calls_outgoing_to_abroad_spendings"
+          },
+          "result_variable": "webhook_result_1"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#user_use_data",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_7_1596729783411",
+      "previous_sibling": "node_4_1596729591846"
+    },
+    {
+      "type": "frame",
+      "title": "User spendings",
+      "output": {
+        "generic": [
+          {
+            "title": "Quelle quantité de données mobiles avez-vous consommé le mois dernier?",
+            "options": [
+              {
+                "label": "environ 100 Mo",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 100 Mo de données mobiles par mois."
+                  }
+                }
+              },
+              {
+                "label": "environ 500 Mo",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 500 Mo de données mobiles par mois."
+                  }
+                }
+              },
+              {
+                "label": "environ 1 000 Mo ( 1 Go )",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 1 000 Mo de données mobiles par mois."
+                  }
+                }
+              },
+              {
+                "label": "environ 10 000 Mo ( 10 Go )",
+                "value": {
+                  "input": {
+                    "text": "J'utilise 10 000 Mo de données mobiles par mois."
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#user_spendings",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_9_1596725490593",
+      "previous_sibling": "Bienvenue"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "$webhook_result_1.cluster"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Bingo !  <a  target=\"_blank\" href=$webhook_result_1.url>J'ai trouvé le forfait sensation pour vous</a>.<br/><br/> "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1596729783411",
+      "conditions": "$webhook_result_1",
+      "dialog_node": "response_10_1596747308371"
+    },
+    {
+      "type": "response_condition",
+      "parent": "node_7_1596729783411",
+      "conditions": "anything_else",
+      "dialog_node": "response_8_1596747309530",
+      "previous_sibling": "response_10_1596747308371"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_9_1596725490593",
+      "variable": "$user_spendings",
+      "dialog_node": "slot_10_1596729023786"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1596729783411",
+      "variable": "$user_use_data",
+      "dialog_node": "slot_10_1596730040135",
+      "previous_sibling": "response_8_1596747309530"
+    },
+    {
+      "type": "slot",
+      "parent": "node_4_1596729591846",
+      "variable": "$user_has_outgoing_sms",
+      "dialog_node": "slot_1_1596729686271"
+    },
+    {
+      "type": "slot",
+      "parent": "node_3_1596727901617",
+      "variable": "$calls_outgoing_to_abroad_spendings",
+      "dialog_node": "slot_4_1596729184949"
+    },
+    {
+      "type": "slot",
+      "parent": "node_10_1596727218229",
+      "variable": "$mo_data_usage",
+      "dialog_node": "slot_5_1596729162374"
+    },
+    {
+      "type": "slot",
+      "parent": "node_2_1596729237729",
+      "variable": "$user_has_outgoing_calls",
+      "dialog_node": "slot_7_1596729432720"
+    },
+    {
+      "type": "standard",
+      "title": "Tout le reste",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Je n'ai pas compris. Vous pouvez essayer de reformuler."
+              },
+              {
+                "text": "Pouvez-vous dire cela autrement ? Je ne comprends pas."
+              },
+              {
+                "text": "Je n'ai pas compris ce que vous voulez dire."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Tout le reste",
+      "previous_sibling": "node_7_1596729783411",
+      "disambiguation_opt_out": true
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Vouliez-vous dire:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "Aucune de précédent"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Vouliez-vous dire:"
+    }
+  },
+  "learning_opt_out": false,
+  "name": "Mobile plan recommendation",
+  "language": "fr",
+  "description": ""
+}
